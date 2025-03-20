@@ -8,7 +8,6 @@ use futures_lite::future;
 use std::future::Future;
 
 // below is the needed imports for the http client
-use std::net::Shutdown;
 use std::net::{TcpStream, ToSocketAddrs};
 use std::pin::Pin;
 use std::task::{Context, Poll};
@@ -16,7 +15,7 @@ use std::task::{Context, Poll};
 use anyhow::{bail, Context as _, Error, Result};
 use async_native_tls::TlsStream;
 use http::Uri;
-use hyper::{body, Body, Client, Request, Response};
+use hyper::{Body, Client, Request, Response};
 use smol::{io, prelude::*, Async};
 
 struct CustomExecutor;
@@ -44,7 +43,7 @@ impl hyper::service::Service<Uri> for CustomConnector {
     type Response = CustomStream;
     type Future = Pin<Box<dyn Future<Output = Result<Self::Response, Self::Error>> + Send>>;
 
-    fn poll_ready(&mut self, cx: &mut Context<'_>) -> Poll<Result<(), Self::Error>> {
+    fn poll_ready(&mut self, _cx: &mut Context<'_>) -> Poll<Result<(), Self::Error>> {
         std::task::Poll::Ready(Ok(()))
     }
 

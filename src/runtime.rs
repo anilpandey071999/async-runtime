@@ -105,11 +105,6 @@ impl Future for CounterFuture {
     }
 }
 
-pub async fn async_fn() {
-    std::thread::sleep(Duration::from_secs(1));
-    println!("async fn");
-}
-
 #[macro_export]
 macro_rules! spawn_task {
     ($future:expr) => {
